@@ -1,0 +1,247 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Dictionary API",
+    "description": "Descrição da minha API",
+    "version": "1.0.0"
+  },
+  "tags": [
+    { "name": "welcome", "description": "Endpoints relacionados à boas vindas" },
+    { "name": "auth", "description": "Endpoints relacionados à autenticação" },
+    { "name": "user", "description": "Endpoints relacionados ao usuário" },
+    { "name": "entries", "description": "Endpoints relacionados ao dicionário" }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": ["welcome"],
+        "summary": "Mensagem de boas-vindas",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Fullstack Challenge 🏅 - Dictionary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/signup": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Registrar um novo usuário",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "email": { "type": "string", "format": "email" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Usuário registrado com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "f3a10cec013ab2c1380acef",
+                  "name": "User 1",
+                  "token": "Bearer JWT.Token"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/signin": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Autenticar usuário",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string", "format": "email" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Usuário autenticado com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "f3a10cec013ab2c1380acef",
+                  "name": "User 1",
+                  "token": "Bearer JWT.Token"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/entries/en": {
+      "get": {
+        "tags": ["entries"],
+        "summary": "Listar palavras do dicionário",
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de palavras do dicionário",
+            "content": {
+              "application/json": {
+                "example": {
+                  "results": ["fire", "firefly", "fireplace", "fireman"],
+                  "totalDocs": 20,
+                  "page": 1,
+                  "totalPages": 5,
+                  "hasNext": true,
+                  "hasPrev": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/entries/en/{word}": {
+      "get": {
+        "tags": ["entries"],
+        "summary": "Obter informações de uma palavra",
+        "parameters": [
+          {
+            "name": "word",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ]
+      }
+    },
+    "/entries/en/{word}/favorite": {
+      "post": {
+        "tags": ["entries"],
+        "summary": "Salvar palavra como favorita",
+        "parameters": [
+          {
+            "name": "word",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ]
+      }
+    },
+    "/entries/en/{word}/unfavorite": {
+      "delete": {
+        "tags": ["entries"],
+        "summary": "Remover palavra das favoritas",
+        "parameters": [
+          {
+            "name": "word",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ]
+      }
+    },
+    "/user/me": {
+      "get": {
+        "tags": ["user"],
+        "summary": "Obter perfil do usuário"
+      }
+    },
+    "/user/me/history": {
+      "get": {
+        "tags": ["user"],
+        "summary": "Obter histórico de palavras visitadas",
+        "responses": {
+          "200": {
+            "description": "Histórico de palavras visitadas",
+            "content": {
+              "application/json": {
+                "example": {
+                  "results": [
+                    { "word": "fire", "added": "2022-05-05T19:28:13.531Z" },
+                    { "word": "firefly", "added": "2022-05-05T19:28:44.021Z" },
+                    {
+                      "word": "fireplace",
+                      "added": "2022-05-05T19:29:28.631Z"
+                    },
+                    { "word": "fireman", "added": "2022-05-05T19:30:03.711Z" }
+                  ],
+                  "totalDocs": 20,
+                  "page": 2,
+                  "totalPages": 5,
+                  "hasNext": true,
+                  "hasPrev": true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/user/me/favorites": {
+    "get": {
+      "tags": ["user"],
+      "summary": "Obter lista de palavras favoritas do usuário",
+      "responses": {
+        "200": {
+          "description": "Lista de palavras favoritas",
+          "content": {
+            "application/json": {
+              "example": {
+                "results": [
+                  { "word": "fire", "added": "2022-05-05T19:30:23.928Z" },
+                  { "word": "firefly", "added": "2022-05-05T19:30:24.088Z" },
+                  { "word": "fireplace", "added": "2022-05-05T19:30:28.963Z" },
+                  { "word": "fireman", "added": "2022-05-05T19:30:33.121Z" }
+                ],
+                "totalDocs": 20,
+                "page": 2,
+                "totalPages": 5,
+                "hasNext": true,
+                "hasPrev": true
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

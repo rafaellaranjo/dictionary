@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    environment:
+      TYPEORM_CONNECTION: ${DB_CONNECTION}
+      TYPEORM_HOST: ${DB_HOST}
+      TYPEORM_PORT: ${DB_PORT}
+      TYPEORM_USERNAME: ${DB_USERNAME}
+      TYPEORM_PASSWORD: ${DB_PASSWORD}
+      TYPEORM_DATABASE: ${DB_DATABASE}
+    ports:
+      - "${APP_PORT}:3000"
+    volumes:
+      - .:/app
+    command: npm run dev

@@ -1,0 +1,15 @@
+{
+  "type": "postgres",
+  "host": "hngomrlb3vfq3jcr.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+  "port": 3306,
+  "username": "rudgqp8qpufmqbys",
+  "password": "i2ifovsqetjixdo1",
+  "database": "rb9v1ybqx7id6y42",
+  "entities": ["./src/models/**/typeorm/entities/*.ts"],
+  "migrations": [
+    "./src/shared/typeorm/migrations/*.ts"
+  ],
+  "cli": {
+    "migrationsDir": "./src/shared/typeorm/migrations"
+  }
+}
