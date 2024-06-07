@@ -1,23 +1,49 @@
-## Dictionary
+# Dictionary
 
-# API Restful com Node.js, Express, Typescript, Typeorm e PostgreSQL
+Este é um projeto de uma API para um dicionário online.
 
-Para inicializar o projeto, siga as etapas abaixo:
+## Visão Geral
 
-1. Faça um clone deste repositório e instale no seu ambiente de desenvolvimento usando o seguinte comando no seu terminal (escolha um diretório apropriado):
+A API fornece endpoints para autenticação de usuários, manipulação de entradas no dicionário, gerenciamento de favoritos e histórico de usuário.
 
-```
-git clone https://github.com/rafaellaranjo/dictionary.git
-```
+## Tecnologias Utilizadas
 
-2. Após clonar o conteúdo do repositório, acesse o diretório criado e efetue a instalação das dependências:
+- Node.js
+- TypeScript
+- Express.js
+- TypeORM
+- JWT (JSON Web Tokens)
+- MySQL
+- Docker
 
-```
-cd dictionary
+## Instalação e Uso com Docker
 
-yarn
+1. Clone este repositório:
+   ```sh
+   git clone https://github.com/rafaellaranjo/dictionary.git
 
-# ou
+2. Instale as dependências:
+   ```sh
+   cd dictionary
+   npm install
 
-npm install
-```
+3. Renomeie o arquivo .env.example para .env e configure suas variáveis de ambiente, como as credenciais do banco de dados e a chave secreta JWT.
+4. Execute o aplicativo com Docker Compose:
+   ```sh
+   docker-compose up
+5. O aplicativo estará disponível em http://localhost:3333.
+
+## Endpoints
+
+Pode acessar a documentação em http://localhost:3333/api-docs/#/
+
+- **GET /auth/signup**: Registrar um novo usuário.
+- **POST /auth/signin**: Autenticar usuário.
+- **GET /entries/en**: Listar palavras do dicionário.
+- **GET /entries/en/:word**: Obter informações de uma palavra do dicionário.
+- **POST /entries/en/:word/favorite**: Salvar palavra como favorita.
+- **DELETE /entries/en/:word/unfavorite**: Remover palavra das favoritas.
+- **GET /user/me**: Obter perfil do usuário.
+- **GET /user/me/history**: Obter histórico de palavras visitadas.
+- **GET /user/me/favorites**: Obter lista de palavras favoritas do usuário.
+
